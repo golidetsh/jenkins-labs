@@ -17,6 +17,7 @@ async def root():
     return {"message": "Welcome to Facebook API"}
 
 @app.post("/createposts")
-def create_posts(new_post: Post):
-    print(new_post.title)
-    return {"data": "new post"}
+def create_posts(post: Post):
+    print(post)
+    print(post.dict())
+    return {"data": post}
