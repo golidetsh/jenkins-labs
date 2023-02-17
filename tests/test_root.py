@@ -16,3 +16,8 @@ def test_invalid_id():
     response = client.get("/posts/99")
     assert response.status_code == 404
     assert response.json() == {'detail': 'id not found'}
+    
+    
+def test_noninteger_id():
+    response = client.get("/posts/abc")
+    assert response.status_code == 422
