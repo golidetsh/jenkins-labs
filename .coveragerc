@@ -2,3 +2,6 @@
 omit =
    env/*
    tests/*
+
+[html]
+directory = docs/tests/html-coverage
