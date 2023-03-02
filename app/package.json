@@ -16,5 +16,8 @@
   "devDependencies": {
     "jest": "^29.4.3",
     "supertest": "^6.3.3"
+  },
+  "scripts": {
+    "test": "jest --watchAll --verbose"
   }
 }
