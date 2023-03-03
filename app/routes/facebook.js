@@ -1,6 +1,6 @@
 const express = require('express');
-const { posts, findPost } = require('../helpers/helper');
 const router = express();
+const { findPost } = require('../helpers/helper');
 
 
 
