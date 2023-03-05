@@ -22,6 +22,4 @@ describe('/api/posts', () => {
     });
   });
 
-
-
 });

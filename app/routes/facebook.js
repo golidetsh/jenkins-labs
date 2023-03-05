@@ -15,7 +15,24 @@ router.get('/api/posts/:id', (req, res) => {
   
      res.send(post);
    });
-  
+ 
+   
+   router.post('/api/posts', (req, res) => {
+    const title = req.body.title;
+    if(!title || title.length < 5 ) {
+        res.status(400).send('Title is required and should be 5 characters minimum');
+        return;
+    } 
+      const post = {
+          id: posts.length +1,
+          title: req.body.title,
+          content: req.body.content,
+          published: req.body.published,
+          rating: req.body.rating
+      };
+      posts.push(post);
+      res.send(post);
+    });
 
 module.exports = router;
 
