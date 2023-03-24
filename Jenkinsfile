@@ -9,8 +9,9 @@ pipeline {
          stage('Setup'){
            steps{
             dir('app') {
-               sh 'pwd'
-               sh 'npm install'
+               sh '''sudo chown -R $USER .             
+                 npm install
+                '''
              }   
            }
          } 
