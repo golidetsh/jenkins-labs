@@ -18,7 +18,7 @@ pipeline {
            steps{
                withPythonEnv('/usr/bin/python3.8') {
                  sh '''pip install -r requirements.txt
-                       sudo chown -R $USER ./docs/unit-tests
+                       sudo chown -R $USER .
                        pytest -v --junitxml=docs/unit-tests/coverage.xml --cov-report xml --cov app.main
                 '''
              }           
