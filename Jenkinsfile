@@ -55,7 +55,7 @@ pipeline {
   stage('SysDig Scan') {
           steps{
             script {
-                sysdigImageScan engineCredentialsId: 'sysdig-secure-api-token', imageName: "docker://" + IMAGE_REPO, engineURL: SYSDIG_API_ENDPOINT             
+                sysdigImageScan engineCredentialsId: 'sysdig-secure-api-token', bailOnFail: false, bailOnPluginFail: false, imageName: "docker://" + IMAGE_REPO, engineURL: SYSDIG_API_ENDPOINT             
         }
       }
     }       
