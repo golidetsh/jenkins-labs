@@ -13,13 +13,15 @@ pipeline {
    VERSION = "${env.BUILD_ID}-${env.GIT_COMMIT}"
    IMAGE_REPO = "${REGISTRY}/${REGISTRY_USERNAME}/${IMAGE}" + ":$VERSION" 
    IMAGE_TAG="${VERSION}"
+   SYSDIG_API_TOKEN_CRED = credentials('sysdig-secure-api-token')
+   SYSDIG_API_ENDPOINT = "https://eu1.app.sysdig.com"
 }
     stages {
         
         stage('Setup'){
            steps{
             withPythonEnv('/usr/bin/python3.8') {
-                    sh 'echo "Job is starting" '
+                    sh 'echo "Pipeline is starting ..." '
                 }            
             }
          } 
@@ -50,6 +52,13 @@ pipeline {
       }
     }        
 
+  stage('SysDig Scan') {
+          steps{
+            script {
+                sysdigImageScan engineCredentialsId: 'sysdig-secure-api-token', imageName: "docker://" + IMAGE_REPO, engineURL: SYSDIG_API_ENDPOINT             
+        }
+      }
+    }       
       }
 }
  
