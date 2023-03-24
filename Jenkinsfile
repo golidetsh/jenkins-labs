@@ -45,7 +45,7 @@ pipeline {
          stage('Docker Build') {
           steps{
             script {
-                sh "docker build -t ${NAME} ."             
+                sh "docker build -t ${IMAGE} ."             
                 sh "docker tag ${REGISTRY_USERNAME}/${IMAGE}:latest ${REGISTRY_USERNAME}/${IMAGE}:${VERSION}"               
         }
       }
