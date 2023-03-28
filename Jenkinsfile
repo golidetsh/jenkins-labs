@@ -4,6 +4,12 @@ pipeline {
     triggers {
         githubPush()
     }
+     environment { 
+   IMAGE = "nodejs-devsecops"
+   REGISTRY_USERNAME = "golide"
+   VERSION = "${env.BUILD_ID}-${env.GIT_COMMIT}"
+   IMAGE_REPO = "${REGISTRY}/${REGISTRY_USERNAME}/${IMAGE}" + ":$VERSION" 
+}
     stages {
         
          stage('Setup'){
@@ -26,7 +32,15 @@ pipeline {
           step([$class: 'CoberturaPublisher', coberturaReportFile: 'app/coverage/clover.xml'])
         }
       }                    
-       }
+    }
+
+        stage('Docker Build') {
+          steps{
+            script {
+                sh "docker build -t ${REGISTRY_USERNAME}/${IMAGE}:${VERSION} ."                          
+        }
+      }
+    }        
      
    }
 }
