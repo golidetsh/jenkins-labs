@@ -36,9 +36,11 @@ pipeline {
 
         stage('Docker Build') {
           steps{
-            script {
-                sh "docker build -t ${REGISTRY_USERNAME}/${IMAGE}:${VERSION} ."                          
-        }
+             dir('app'){
+                script {
+                  sh "docker build -t ${REGISTRY_USERNAME}/${IMAGE}:${VERSION} ."                          
+                }
+            }
       }
     }        
      
