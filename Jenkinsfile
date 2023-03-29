@@ -43,13 +43,13 @@ pipeline {
             }
       }
     }        
-
+ 
    stage('Trivy Scan') {
             steps {
                 dir('app'){
                 script {
                     sh '''
-                    sudo chown $USER @/usr/local/bin/html.tpl
+                    sudo chown $USER \"@/usr/local/bin/html.tpl\"
                     trivy image --format template --template \"@/usr/local/bin/html.tpl\" --output trivy_report.html ${REGISTRY_USERNAME}/${IMAGE}:${VERSION} 
                     '''         
                 } 
