@@ -43,6 +43,32 @@ pipeline {
             }
       }
     }        
+
+   stage('Trivy Scan') {
+            steps {
+                dir('app'){
+                script {
+                    sh '''
+                    sudo chown $USER @/usr/local/bin/html.tpl
+                    trivy image --format template --template \"@/usr/local/bin/html.tpl\" --output trivy_report.html ${REGISTRY_USERNAME}/${IMAGE}:${VERSION} 
+                    '''         
+                } 
+              }  
+            }
+            post {
+        always {
+            archiveArtifacts artifacts: "trivy_report.html", fingerprint: true     
+            publishHTML (target: [
+                allowMissing: false,
+                alwaysLinkToLastBuild: false,
+                keepAll: true,
+                reportDir: '.',
+                reportFiles: 'trivy_report.html',
+                reportName: 'Trivy Scan',
+                ])
+            }
+        }
+      }
      
    }
 }
