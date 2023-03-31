@@ -49,7 +49,7 @@ pipeline {
                 dir('app'){
                 script {
                     sh '''
-                    sudo chown $USER \"@/usr/local/bin/html.tpl\"
+                    sudo chown -R $USER \"/usr/local/bin/\"
                     trivy image --format template --template \"@/usr/local/bin/html.tpl\" --output trivy_report.html ${REGISTRY_USERNAME}/${IMAGE}:${VERSION} 
                     '''         
                 } 
