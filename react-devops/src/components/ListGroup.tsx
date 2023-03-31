@@ -8,11 +8,11 @@ function ListGroup() {
       <h1>MyList</h1>
       {posts.length === 0 && <p>No item found</p>}
       <ul className="list-group">
-        {posts.map((post) => (
+        {posts.map((post, index) => (
           <li
             className="list-group-item"
             key={post}
-            onClick={() => console.log("Clicked")}
+            onClick={() => console.log(post, index)}
           >
             {post}
           </li>
