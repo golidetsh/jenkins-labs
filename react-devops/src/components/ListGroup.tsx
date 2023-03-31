@@ -1,7 +1,7 @@
 function ListGroup() {
 
     let posts = ["Top 10 Recipes", "EPL Diaries", "Tokyo Drift Story", "Johannesburg By Night"]; 
-    posts = [];
+    //posts = [];
 
   return (
     <>
@@ -9,7 +9,11 @@ function ListGroup() {
       {posts.length === 0 && <p>No item found</p>}
       <ul className="list-group">
         {posts.map((post) => (
-          <li className="list-group-item" key={post}>
+          <li
+            className="list-group-item"
+            key={post}
+            onClick={() => console.log("Clicked")}
+          >
             {post}
           </li>
         ))}
