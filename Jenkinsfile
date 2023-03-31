@@ -50,7 +50,7 @@ pipeline {
                 script {
                     sh '''
                     sudo chown -R $USER \"/usr/local/bin/\"
-                    trivy --severity HIGH,CRITICAL image --format template --template \"@/usr/local/bin/html.tpl\" --output trivy_report.html ${REGISTRY_USERNAME}/${IMAGE}:${VERSION} 
+                    trivy --severity HIGH,CRITICAL  --exit-code 1 image --format template --template \"@/usr/local/bin/html.tpl\" --output trivy_report.html ${REGISTRY_USERNAME}/${IMAGE}:${VERSION} 
                     '''         
                 } 
               }  
