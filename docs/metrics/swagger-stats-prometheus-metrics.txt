@@ -1,0 +1,122 @@
+# HELP nodejs_process_memory_rss_bytes Node.js process resident memory (RSS) bytes 
+# TYPE nodejs_process_memory_rss_bytes gauge
+nodejs_process_memory_rss_bytes 44388352
+
+# HELP nodejs_process_memory_heap_total_bytes Node.js process memory heapTotal bytes
+# TYPE nodejs_process_memory_heap_total_bytes gauge
+nodejs_process_memory_heap_total_bytes 13168640
+
+# HELP nodejs_process_memory_heap_used_bytes Node.js process memory heapUsed bytes
+# TYPE nodejs_process_memory_heap_used_bytes gauge
+nodejs_process_memory_heap_used_bytes 12015312
+
+# HELP nodejs_process_memory_external_bytes Node.js process memory external bytes
+# TYPE nodejs_process_memory_external_bytes gauge
+nodejs_process_memory_external_bytes 951984
+
+# HELP nodejs_process_cpu_usage_percentage Node.js process CPU usage percentage
+# TYPE nodejs_process_cpu_usage_percentage gauge
+nodejs_process_cpu_usage_percentage 0
+
+# HELP api_all_request_total The total number of all API requests received
+# TYPE api_all_request_total counter
+api_all_request_total 1
+
+# HELP api_all_success_total The total number of all API requests with success response
+# TYPE api_all_success_total counter
+api_all_success_total 1
+
+# HELP api_all_errors_total The total number of all API requests with error response
+# TYPE api_all_errors_total counter
+api_all_errors_total 0
+
+# HELP api_all_client_error_total The total number of all API requests with client error response
+# TYPE api_all_client_error_total counter
+api_all_client_error_total 0
+
+# HELP api_all_server_error_total The total number of all API requests with server error response
+# TYPE api_all_server_error_total counter
+api_all_server_error_total 0
+
+# HELP api_all_request_in_processing_total The total number of all API requests currently in processing (no response yet)
+# TYPE api_all_request_in_processing_total gauge
+api_all_request_in_processing_total 0
+
+# HELP egress_api_all_request_total The total number of all API requests received
+# TYPE egress_api_all_request_total counter
+egress_api_all_request_total 0
+
+# HELP egress_api_all_success_total The total number of all API requests with success response
+# TYPE egress_api_all_success_total counter
+egress_api_all_success_total 0
+
+# HELP egress_api_all_errors_total The total number of all API requests with error response
+# TYPE egress_api_all_errors_total counter
+egress_api_all_errors_total 0
+
+# HELP egress_api_all_client_error_total The total number of all API requests with client error response
+# TYPE egress_api_all_client_error_total counter
+egress_api_all_client_error_total 0
+
+# HELP egress_api_all_server_error_total The total number of all API requests with server error response
+# TYPE egress_api_all_server_error_total counter
+egress_api_all_server_error_total 0
+
+# HELP egress_api_all_request_in_processing_total The total number of all API requests currently in processing (no response yet)
+# TYPE egress_api_all_request_in_processing_total gauge
+egress_api_all_request_in_processing_total 0
+
+# HELP api_request_total The total number of all API requests
+# TYPE api_request_total counter
+api_request_total{method="GET",path="/api/posts",code="200"} 1
+
+# HELP api_request_duration_milliseconds API requests duration
+# TYPE api_request_duration_milliseconds histogram
+api_request_duration_milliseconds_bucket{le="5",method="GET",path="/api/posts",code="200"} 0
+api_request_duration_milliseconds_bucket{le="10",method="GET",path="/api/posts",code="200"} 0
+api_request_duration_milliseconds_bucket{le="25",method="GET",path="/api/posts",code="200"} 0
+api_request_duration_milliseconds_bucket{le="50",method="GET",path="/api/posts",code="200"} 1
+api_request_duration_milliseconds_bucket{le="100",method="GET",path="/api/posts",code="200"} 1
+api_request_duration_milliseconds_bucket{le="250",method="GET",path="/api/posts",code="200"} 1
+api_request_duration_milliseconds_bucket{le="500",method="GET",path="/api/posts",code="200"} 1
+api_request_duration_milliseconds_bucket{le="1000",method="GET",path="/api/posts",code="200"} 1
+api_request_duration_milliseconds_bucket{le="2500",method="GET",path="/api/posts",code="200"} 1
+api_request_duration_milliseconds_bucket{le="5000",method="GET",path="/api/posts",code="200"} 1
+api_request_duration_milliseconds_bucket{le="10000",method="GET",path="/api/posts",code="200"} 1
+api_request_duration_milliseconds_bucket{le="+Inf",method="GET",path="/api/posts",code="200"} 1
+api_request_duration_milliseconds_sum{method="GET",path="/api/posts",code="200"} 40
+api_request_duration_milliseconds_count{method="GET",path="/api/posts",code="200"} 1
+
+# HELP api_request_size_bytes API requests size
+# TYPE api_request_size_bytes histogram
+api_request_size_bytes_bucket{le="5",method="GET",path="/api/posts",code="200"} 1
+api_request_size_bytes_bucket{le="10",method="GET",path="/api/posts",code="200"} 1
+api_request_size_bytes_bucket{le="25",method="GET",path="/api/posts",code="200"} 1
+api_request_size_bytes_bucket{le="50",method="GET",path="/api/posts",code="200"} 1
+api_request_size_bytes_bucket{le="100",method="GET",path="/api/posts",code="200"} 1
+api_request_size_bytes_bucket{le="250",method="GET",path="/api/posts",code="200"} 1
+api_request_size_bytes_bucket{le="500",method="GET",path="/api/posts",code="200"} 1
+api_request_size_bytes_bucket{le="1000",method="GET",path="/api/posts",code="200"} 1
+api_request_size_bytes_bucket{le="2500",method="GET",path="/api/posts",code="200"} 1
+api_request_size_bytes_bucket{le="5000",method="GET",path="/api/posts",code="200"} 1
+api_request_size_bytes_bucket{le="10000",method="GET",path="/api/posts",code="200"} 1
+api_request_size_bytes_bucket{le="+Inf",method="GET",path="/api/posts",code="200"} 1
+api_request_size_bytes_sum{method="GET",path="/api/posts",code="200"} 0
+api_request_size_bytes_count{method="GET",path="/api/posts",code="200"} 1
+
+# HELP api_response_size_bytes API requests size
+# TYPE api_response_size_bytes histogram
+api_response_size_bytes_bucket{le="5",method="GET",path="/api/posts",code="200"} 0
+api_response_size_bytes_bucket{le="10",method="GET",path="/api/posts",code="200"} 0
+api_response_size_bytes_bucket{le="25",method="GET",path="/api/posts",code="200"} 0
+api_response_size_bytes_bucket{le="50",method="GET",path="/api/posts",code="200"} 0
+api_response_size_bytes_bucket{le="100",method="GET",path="/api/posts",code="200"} 0
+api_response_size_bytes_bucket{le="250",method="GET",path="/api/posts",code="200"} 0
+api_response_size_bytes_bucket{le="500",method="GET",path="/api/posts",code="200"} 1
+api_response_size_bytes_bucket{le="1000",method="GET",path="/api/posts",code="200"} 1
+api_response_size_bytes_bucket{le="2500",method="GET",path="/api/posts",code="200"} 1
+api_response_size_bytes_bucket{le="5000",method="GET",path="/api/posts",code="200"} 1
+api_response_size_bytes_bucket{le="10000",method="GET",path="/api/posts",code="200"} 1
+api_response_size_bytes_bucket{le="+Inf",method="GET",path="/api/posts",code="200"} 1
+api_response_size_bytes_sum{method="GET",path="/api/posts",code="200"} 265
+api_response_size_bytes_count{method="GET",path="/api/posts",code="200"} 1
