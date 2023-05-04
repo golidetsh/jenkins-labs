@@ -145,11 +145,15 @@ _Below is an example of how you can instruct your audience on installing and set
    ```sh
    npm install
    ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
+4. INSTALL .Net RUNTIME and SDK
    ```
-
+   sudo apt-get update && \
+  sudo apt-get install -y aspnetcore-runtime-7.0
+   ```
+  ```
+  sudo apt-get update && \
+  sudo apt-get install -y dotnet-sdk-7.0
+   ```
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
