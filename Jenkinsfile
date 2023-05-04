@@ -13,7 +13,7 @@ pipeline {
 
         stage('Setup'){
            steps{
-               sh 'dotnet restore FlexToEcocash.sln'
+               sh 'dotnet restore devsecops.sln'
             }
          }
 
