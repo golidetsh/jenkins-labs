@@ -5,9 +5,9 @@ pipeline {
     }
 
     environment { 
-
    PROJECT_NAME = "facebook"
-
+   REGISTRYUSERNAME = "golide"
+   VERSION = "dev-latest"
 }
     stages {
 
@@ -24,7 +24,7 @@ pipeline {
                 '''
             }
          }
-      
+
       }
 
 }
