@@ -25,6 +25,14 @@ pipeline {
             }
          }
 
+        stage('Docker Build'){
+           steps{
+               sh  'cd /var/lib/jenkins/workspace/DotNet-DevSecOps'
+               sh "docker build -t ${NAME} /var/lib/jenkins/workspace/DotNet-DevSecOps"             
+               sh "docker tag ${REGISTRYUSERNAME}/${PROJECT_NAME}:latest ${REGISTRYUSERNAME}/${PROJECT_NAME}:${VERSION}"               
+            }
+         }
+         
       }
 
 }
