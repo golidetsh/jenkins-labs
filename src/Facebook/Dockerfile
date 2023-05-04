@@ -1,14 +1,21 @@
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
-WORKDIR /src/Facebook
-COPY ["Facebook.csproj", "./"]
-RUN dotnet restore "./Facebook.csproj"
-COPY . .
-RUN dotnet build "Facebook.csproj" -c Release -o /app
-
-FROM build AS publish
-RUN dotnet publish "Facebook.csproj" -c Release -o /app
-
-FROM base AS final
 WORKDIR /app
-COPY --from=publish /app .
+
+# Copy the project file and restore dependencies
+COPY *.csproj .
+RUN dotnet restore
+
+# Copy the rest of the application code
+COPY . .
+
+# Build the application
+RUN dotnet publish -c Release -o out
+
+# Create a new image for the application
+FROM mcr.microsoft.com/dotnet/aspnet:7.0
+WORKDIR /app
+COPY --from=build /app/out .
+
+# # Expose port 80 and start the application
+# EXPOSE 80
 ENTRYPOINT ["dotnet", "Facebook.dll"]
