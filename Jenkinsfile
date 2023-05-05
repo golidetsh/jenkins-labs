@@ -28,9 +28,9 @@ pipeline {
         stage('Docker Build'){
            steps{
                 sh  "echo ${BUILD_NUMBER}"
-                sh "echo  ${env.BUILD_ID} "       
+                sh "echo  ${env.BUILD_ID}"       
                sh  'cd /var/lib/jenkins/workspace/DotNet-DevSecOps/src/Facebook'
-               sh "docker build -t ${REGISTRYUSERNAME}/${PROJECT_NAME}:${VERSION} /var/lib/jenkins/workspace/DotNet-DevSecOps/src/Facebook"                           
+               sh "docker build -t ${REGISTRYUSERNAME}/${PROJECT_NAME}:${BUILD_NUMBER} /var/lib/jenkins/workspace/DotNet-DevSecOps/src/Facebook"                           
             }
          }
 
