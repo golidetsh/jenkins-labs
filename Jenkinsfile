@@ -5,7 +5,7 @@ pipeline {
     }
 
     environment { 
-    PROJECT_NAME = "facebook"
+    PROJECT_NAME = "${JOB_NAME}"
     VERSION = "${env.BUILD_ID}"
     IMAGE_TAG = "dev-latest"
     REGISTRY_USERNAME = "golide"
@@ -16,6 +16,7 @@ pipeline {
 
         stage('Setup'){
            steps{
+               sh 'echo ${PROJECT_NAME}'
                sh 'dotnet restore devsecops.sln'
             }
          }
