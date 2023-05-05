@@ -28,8 +28,7 @@ pipeline {
 
         stage('Docker Build'){
            steps{
-                sh  "echo ${VERSION}"
-                sh "echo ${VERSION2}"       
+                sh  "echo ${VERSION}"      
                sh  'cd /var/lib/jenkins/workspace/DotNet-DevSecOps/src/Facebook'
                sh "docker build -t ${REGISTRY_USERNAME}/${PROJECT_NAME}:${IMAGE_TAG} /var/lib/jenkins/workspace/DotNet-DevSecOps/src/Facebook"                           
             }
