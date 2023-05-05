@@ -7,7 +7,7 @@ pipeline {
     environment { 
     PROJECT_NAME = "facebook"
     VERSION = "${env.BUILD_ID}"
-    VERSION2 = "${env.BUILD_NUMBER}"
+    IMAGE_TAG = "dev-latest"
     REGISTRY_USERNAME = "golide"
 }
     stages {
@@ -31,7 +31,7 @@ pipeline {
                 sh  "echo ${VERSION}"
                 sh "echo ${VERSION2}"       
                sh  'cd /var/lib/jenkins/workspace/DotNet-DevSecOps/src/Facebook'
-               sh "docker build -t ${REGISTRY_USERNAME}/${PROJECT_NAME}:${BUILD_NUMBER} /var/lib/jenkins/workspace/DotNet-DevSecOps/src/Facebook"                           
+               sh "docker build -t ${REGISTRY_USERNAME}/${PROJECT_NAME}:${IMAGE_TAG} /var/lib/jenkins/workspace/DotNet-DevSecOps/src/Facebook"                           
             }
          }
 
