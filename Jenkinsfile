@@ -9,6 +9,8 @@ pipeline {
     VERSION = "${env.BUILD_ID}"
     IMAGE_TAG = "dev-latest"
     REGISTRY_USERNAME = "golide"
+    DOCKER_IMAGE = "${REGISTRY_USERNAME}/${PROJECT_NAME}:${IMAGE_TAG}"
+    REGISTRY_CREDENTIALS = credentials('dockerhub')
 }
     stages {
 
@@ -25,16 +27,18 @@ pipeline {
                 '''
             }
          }
-
-        stage('Docker Build'){
-           steps{
-                sh  "echo ${VERSION}"      
-               sh  'cd /var/lib/jenkins/workspace/DotNet-DevSecOps/src/Facebook'
-               sh "docker build -t ${REGISTRY_USERNAME}/${PROJECT_NAME}:${IMAGE_TAG} /var/lib/jenkins/workspace/DotNet-DevSecOps/src/Facebook"                           
+         
+     stage('Docker Build and Push') {
+      steps {
+        script {
+            sh "cd /var/lib/jenkins/workspace/DotNet-DevSecOps/src/Facebook && docker build -t ${DOCKER_IMAGE} ."
+            def dockerImage = docker.image("${DOCKER_IMAGE}")
+            docker.withRegistry('https://index.docker.io/v1/', "dockerhub") {
+                dockerImage.push()
             }
-         }
-
+        }
       }
-
+    }
+      }
 }
  
