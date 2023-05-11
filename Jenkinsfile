@@ -50,7 +50,6 @@ pipeline {
 
         stage('Update Helm Charts') {
             steps { 
-
                         sh "mkdir helm-input"
                         sh "mkdir helm-output"
                         sh "mkdir dev-deployments"
@@ -67,7 +66,7 @@ pipeline {
                         sh "git add --all"
                         sh "git commit -am \"dev deployment of ${CI_PROJECT_NAME}\""                   
                         sh "git remote set-url origin https://edtshuma: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@github.com/edtshuma/dev-helm-deployments.git"
-                        sh "git push origin master"
+                        sh "git push origin HEAD:master"
                         sh "cd ${WORKSPACE}"
                         sh "sudo rm -r helm-input"
                         sh "sudo rm -r helm-output"
