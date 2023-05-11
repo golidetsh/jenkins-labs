@@ -65,7 +65,7 @@ pipeline {
                         sh "git config --global user.email \"edtshuma@gmail.com\""
                         sh "git add --all"
                         sh "git commit -am \"dev deployment of ${CI_PROJECT_NAME}\""                   
-                        sh "git remote set-url origin https://edtshuma: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@github.com/edtshuma/dev-helm-deployments.git"
+                        sh "git remote set-url origin https://edtshuma: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@github.com/edtshuma/dev-helm-deployments.git"
                         sh "git push origin HEAD:master"
                         sh "cd ${WORKSPACE}"
                         sh "sudo rm -r helm-input"
