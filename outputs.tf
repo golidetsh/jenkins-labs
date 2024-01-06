@@ -1,1 +1,5 @@
 #--root/outputs.tf---
+
+
+## STORAGE
+

@@ -1,0 +1,2 @@
+# --- networking/variables.tf ---
+
