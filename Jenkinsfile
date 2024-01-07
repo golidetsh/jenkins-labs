@@ -22,7 +22,7 @@ pipeline {
                         dir("terraform")
                         {
                             git branch: 'dev',
-                                credentialsId: 'Credential ID',
+                                credentialsId: 'github2024PAT',
                                 url: 'https://github.com/edtshuma/jenkins-labs.git'
                         }
                     }
