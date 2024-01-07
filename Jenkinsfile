@@ -21,7 +21,9 @@ pipeline {
                  script{
                         dir("terraform")
                         {
-                            git "https://github.com/edtshuma/jenkins-labs.git"
+                            git branch: 'dev',
+                                credentialsId: 'Credential ID',
+                                url: 'https://github.com/edtshuma/jenkins-labs.git'
                         }
                     }
                 }
