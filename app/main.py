@@ -36,12 +36,17 @@ my_posts = [{"title": "Everyday Cooking","content": "Top 10 recipes","published"
 async def root():
     return {"message": "Welcome to Facebook API"}
 
-@app.post("/createposts")
+@app.post("/createposts", status_code=status.HTTP_201_CREATED)
 def create_posts(post: Post):
-    post_dict = post.dict()
-    post_dict['id'] = randrange(0, 10000000)
-    my_posts.append(post_dict)
-    return {"data": post_dict}
+    cursor.execute("""INSERT INTO posts (title, content, published) VALUES(%s, %s, %s) RETURNING  
+                   * """,
+                   (post.title, post.content, post.published))
+    
+    new_post =cursor.fetchone()
+    
+    conn.commit()
+
+    return {"data": new_post}
 
 
 @app.get("/posts")
