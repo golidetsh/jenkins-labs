@@ -36,6 +36,7 @@ my_posts = [{"title": "Everyday Cooking","content": "Top 10 recipes","published"
 async def root():
     return {"message": "Welcome to Facebook API"}
 
+
 @app.post("/createposts", status_code=status.HTTP_201_CREATED)
 def create_posts(post: Post):
     cursor.execute("""INSERT INTO posts (title, content, published) VALUES(%s, %s, %s) RETURNING  
@@ -45,16 +46,17 @@ def create_posts(post: Post):
     new_post =cursor.fetchone()
 
     conn.commit()
-
     return {"data": new_post}
+
 
 
 @app.get("/posts")
 def get_posts():
     cursor.execute("""SELECT * FROM posts""")
     posts = cursor.fetchall()
-    print(posts)
+
     return {"data": posts}
+
 
 
 def find_post(id):
@@ -63,11 +65,25 @@ def find_post(id):
          return p
 
 
+
 @app.get("/posts/{id}")
 def get_post(id: int, response: Response):
     cursor.execute("""SELECT * FROM posts WHERE id = %s""", (str(id),))
     post = cursor.fetchone()
+
     if not post:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, 
                             detail =f"Post with id {id} was not found")
     return {"Post detail" : post }
+
+
+@app.delete("/posts/{id}", status_code=status.HTTP_204_NO_CONTENT)
+def get_post(id: int):
+    cursor.execute("""DELETE FROM posts WHERE id = %s returning *""", (str(id),))
+    deleted_post = cursor.fetchone()
+    conn.commit()
+
+    if deleted_post == None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, 
+                            detail =f"Post with id {id} does not exist")
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
