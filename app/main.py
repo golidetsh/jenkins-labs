@@ -1,12 +1,18 @@
 from fastapi import FastAPI
 from fastapi.params import Body
-from fastapi import FastAPI , Response, status, HTTPException 
+from fastapi import FastAPI , Response, Depends, status, HTTPException 
 from pydantic import BaseModel
 from typing import Optional
 from random import randrange
 import psycopg2
 from psycopg2.extras import RealDictCursor
-import time
+from time import sleep
+from . import models
+from sqlalchemy.orm import Session
+from .database import SessionLocal, engine, get_db
+
+# Creates tables in db
+models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
@@ -14,6 +20,11 @@ class Post(BaseModel):
     title: str
     content: str
     published: bool = True
+
+@app.get("/sqlalchemy")
+def test_db(db: Session = Depends(get_db)):
+    return {"status": "success"}
+
 
 while True:
 
@@ -100,3 +111,5 @@ def update_post(id: int, post: Post):
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, 
                             detail =f"Post with id {id} does not exist")
     return {"data" : updated_post }
+
+
