@@ -9,12 +9,20 @@ from psycopg2.extras import RealDictCursor
 from time import sleep
 from . import models
 from sqlalchemy.orm import Session
-from .database import SessionLocal, engine, get_db
+from .database import SessionLocal, engine
 
 # Creates tables in db
 models.Base.metadata.create_all(bind=engine)
 
+
 app = FastAPI()
+
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
 
 class Post(BaseModel):
     title: str
@@ -23,21 +31,24 @@ class Post(BaseModel):
 
 @app.get("/sqlalchemy")
 def test_db(db: Session = Depends(get_db)):
-    return {"status": "success"}
+   
+    posts = db.query(models.Post).all()
+
+    return {"data": "success"}
 
 
-while True:
+# while True:
 
-    try:
-        conn = psycopg2.connect(host='localhost', database='fastapi', user='postgres',
-                             password='abc123', cursor_factory=RealDictCursor)
-        cursor = conn.cursor()
-        print("Database connected successfully")
-        break
-    except Exception as error:
-        print("Database connection was not successful")
-        print("Error: ", error)
-        sleep(2)
+    # try:
+    #     conn = psycopg2.connect(host='localhost', database='fastapi', user='postgres',
+    #                          password='abc123', cursor_factory=RealDictCursor)
+    #     cursor = conn.cursor()
+    #     print("Database connected successfully")
+    #     break
+    # except Exception as error:
+    #     print("Database connection was not successful")
+    #     print("Error: ", error)
+    #     sleep(2)
 
 
 my_posts = [{"title": "Everyday Cooking","content": "Top 10 recipes","published": "True","rating": "3", "id": 2}]
@@ -54,7 +65,7 @@ def create_posts(post: Post):
                    * """,
                    (post.title, post.content, post.published))
     
-    new_post =cursor.fetchone()
+    new_post = cursor.fetchone()
 
     conn.commit()
     return {"data": new_post}
@@ -62,11 +73,14 @@ def create_posts(post: Post):
 
 
 @app.get("/posts")
-def get_posts():
-    cursor.execute("""SELECT * FROM posts""")
-    posts = cursor.fetchall()
+def get_posts(db: Session = Depends(get_db)):
+
+    # cursor.execute("""SELECT * FROM posts""")
+    # posts = cursor.fetchall()
+    posts = db.query(models.Post).all()
 
     return {"data": posts}
+
 
 
 
