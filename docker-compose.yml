@@ -7,7 +7,7 @@ services:
     volumes:
       - .:/app
     ports:
-      - 8008:8000
+      - 8000:8000
     environment:
       - DATABASE_URL=postgresql://postgres:abc123@db:5432/fastapi
     depends_on:
