@@ -2,6 +2,7 @@ x-logging: &default-logging
   driver: loki
   options:
     loki-url: 'http://localhost:3100/api/prom/push'
+    loki-external-labels: job=dockerlogs,environment=development
     loki-pipeline-stages: |
       - multiline:
           firstline: '^\d{4}-\d{2}-\d{2} \d{1,2}:\d{2}:\d{2}'
@@ -30,6 +31,7 @@ services:
 
   db:
     image: postgres:latest
+    container_name: postgresdb
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     expose:
@@ -38,9 +40,34 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=abc123
       - POSTGRES_DB=fastapi
+
+  webservice:
+    image: nginx
+    container_name: webservice
+    ports:
+      - 8001:80
+    logging: *default-logging
+    depends_on:
+      - loki
   
+
+  http-client:
+    image: alpine
+    container_name: http-client
+    entrypoint: |
+      sh -c 'sh -s << EOF
+      apk --no-cache add curl
+      while true
+        do
+          curl http://webservice
+        done
+      EOF'
+    depends_on:
+      - webservice
+
   loki:
     image: grafana/loki:2.9.2
+    container_name: loki
     command: -config.file=/etc/loki/local-config.yaml
     ports:
       - "3100:3100"
@@ -65,6 +92,7 @@ services:
 
   grafana:
     image: grafana/grafana:10.2.0
+    container_name: grafana
     ports:
       - "3000:3000"
     volumes:
