@@ -6,6 +6,7 @@ from typing import Optional
 from random import randrange
 import psycopg2
 import os
+import logging
 from psycopg2.extras import RealDictCursor
 from time import sleep
 from . import models
@@ -23,6 +24,16 @@ EXPOSE_PORT = os.environ.get("EXPOSE_PORT", 8000)
 app = FastAPI()
 app.add_middleware(PrometheusMiddleware, app_name=APP_NAME)
 app.add_route("/metrics", metrics)
+
+
+class EndpointFilter(logging.Filter):
+    # Uvicorn endpoint access log filter
+    def filter(self, record: logging.LogRecord) -> bool:
+        return record.getMessage().find("GET /metrics") == -1
+
+
+# Filter out /endpoint
+logging.getLogger("uvicorn.access").addFilter(EndpointFilter())
 
 # def get_db():
 #     db = SessionLocal()
@@ -63,6 +74,7 @@ my_posts = [{"title": "Everyday Cooking","content": "Top 10 recipes","published"
 
 @app.get("/")
 async def root():
+    logging.error("landing page")
     return {"message": "Welcome to Facebook API"}
 
 

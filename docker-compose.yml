@@ -1,3 +1,14 @@
+x-logging: &default-logging
+  driver: loki
+  options:
+    loki-url: 'http://localhost:3100/api/prom/push'
+    loki-pipeline-stages: |
+      - multiline:
+          firstline: '^\d{4}-\d{2}-\d{2} \d{1,2}:\d{2}:\d{2}'
+          max_wait_time: 3s
+      - regex:
+          expression: '^(?P<time>\d{4}-\d{2}-\d{2} \d{1,2}:\d{2}:\d{2},d{3}) (?P<message>(?s:.*))$$'
+
 version: '3.8'
 
 services:
@@ -14,6 +25,9 @@ services:
       - APP_NAME="app-a"
     depends_on:
       - db
+      - loki
+    logging: *default-logging
+
   db:
     image: postgres:latest
     volumes:
@@ -25,6 +39,12 @@ services:
       - POSTGRES_PASSWORD=abc123
       - POSTGRES_DB=fastapi
   
+  loki:
+    image: grafana/loki:2.9.2
+    command: -config.file=/etc/loki/local-config.yaml
+    ports:
+      - "3100:3100"
+
   prometheus:
     restart: always
     container_name: prometheus
@@ -33,15 +53,33 @@ services:
     volumes:
       - ./docs/config/prometheus.yml:/etc/prometheus/prometheus.yml
       - prometheusdata:/prometheus
-
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
       - '--web.enable-admin-api'
       - '--web.enable-lifecycle'
     ports:
       - 9090:9090 
+    depends_on:
+      - loki
+    logging: *default-logging
 
+  grafana:
+    image: grafana/grafana:10.2.0
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./docs/grafana/:/etc/grafana/provisioning/datasources
+      - grafanadata:/var/lib/grafana
+    depends_on:
+      - loki
+      - prometheus
+    environment:
+      GF_AUTH_ANONYMOUS_ENABLED: "true"
+      GF_AUTH_ANONYMOUS_ORG_ROLE: "Admin"
+      GF_AUTH_DISABLE_LOGIN_FORM: "true"
+    logging: *default-logging
 
 volumes:
   postgres_data:
   prometheusdata:
+  grafanadata:
