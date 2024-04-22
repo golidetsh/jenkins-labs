@@ -65,12 +65,31 @@ services:
     depends_on:
       - webservice
 
+  
+  alertmanager:
+    image: prom/alertmanager
+    container_name: alertmanager
+    command:
+      - '--config.file=/etc/alertmanager/config.yml'
+      - '--storage.path=/alertmanager'
+    volumes:
+      - ./docs/alertmanager/alertmanager.yml:/etc/alertmanager/config.yml
+    ports:
+      - 9093:9093
+
   loki:
     image: grafana/loki:2.9.2
     container_name: loki
-    command: -config.file=/etc/loki/local-config.yaml
+    volumes:
+     - ./docs/loki/loki.yml:/etc/config/loki.yml
+     - ./docs/alertmanager/rules.yml:/etc/loki/rules/fake/rules.yml
+    entrypoint:
+     - /usr/bin/loki
+     - -config.file=/etc/config/loki.yml
     ports:
-      - "3100:3100"
+     - "3100:3100"
+    depends_on:
+     - alertmanager
 
   prometheus:
     restart: always
