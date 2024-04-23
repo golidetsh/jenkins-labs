@@ -18,6 +18,7 @@ APP_NAME = os.environ.get("APP_NAME", "app")
 EXPOSE_PORT = os.environ.get("EXPOSE_PORT", 8000)
 
 # Creates tables in db
+# Creates tables in db
 # models.Base.metadata.create_all(bind=engine)
 
 
